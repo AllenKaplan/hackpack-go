@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <title>ToDo List</title>
+</head>
+
+<body  class="bg-green-100">
+  <div id="app">
+        <div class="container mx-auto">
+        <h1>Internship Tracker</h1>
+        <button @click="get()" class="p-4 bg-green-500">Refresh</button>
+        <button @click="addForm()" class="p-4 bg-green-500">Add Application</button>
+        <button @click="editForm()" class="p-4 bg-green-500">Edit Application</button>
+        <form v-show="this.viewForm" v-on:submit.prevent="submitForm()" class="border border-green-600 p-2 my-2">
+            <fieldset>
+                <legend>Add Job Posting</legend>
+                <label for="id" v-if="this.update">Id: </label><input v-show="update" type="number" id="id" name="id" v-model="newTodo.id" class="bg-gray-200 m-2"> </br></v-if>
+                <label for="name">Company: </label><input type="text" id="name" name="name" v-model="newTodo.name" class="bg-white m-2"> </br>
+                <label for="description">Position: </label><input type="text" id="description" name="description" v-model="newTodo.description" class="bg-white m-2"> </br>
+                <label for="status">Application Status: </label>
+                <select id="status" name="status" v-model="newTodo.status" class="bg-white m-2 px-2">
+                    <option value="not started">Not Applied</option>
+                    <option value="started">Started</option>
+                    <option value="complete">Complete</option>
+                </select> </br>
+                <input type="submit" value="Submit" class="p-4 bg-green-500">
+        </fieldset>
+        </form>
+        <table class="table-fixed my-4 bg-green-500 border border-green-600">
+            <thead>
+                <tr>
+                    <th scope="col" class="w-1/12">ID</th>
+                    <th scope="col" class="w-2/12">Name</th>
+                    <th scope="col" class="w-2/12">Description</th>
+                    <th scope="col" class="w-2/12">Status</th>
+                    <th scope="col" class="w-1/12">Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr v-for="todo in todos" :key="todo.id">
+                <td  class="border border-green-600 text-center"> <p class="m-2"> {{ todo.id }} </p> </td>
+                <td  class="border border-green-600 text-center"> <p class="m-2"> {{ todo.name }} </p> </td>
+                <td  class="border border-green-600 text-center">  <p class="m-2"> {{ todo.description }} </p> </td>
+                <td  class="border border-green-600 text-center">  <p class="m-2"> {{ todo.status }} </p> </td>
+                <td  class="border border-green-600 bg-green-400 text-center" @click="edit(todo)">edit</td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+  <script>
+    const app = new Vue({
+      el: '#app',
+      created() {
+        this.get()
+      },
+      data() { 
+        return {
+            update: false,
+            viewForm: false,
+            showModal: false,
+            newTodo: {id: 0, name: "", description: "", status: ""},
+        }
+       },
+      methods: {
+          get: function() {
+            // axios.get('https://jsonplaceholder.typicode.com/todos')
+            // .then(json => this.notes = json.data)
+          },
+          post: function() {
+              alert(JSON.stringify(this.newTodo));
+              console.log(JSON.stringify(this.newTodo));
+              this.resertForm();           
+          },
+          put: function() {
+              alert(JSON.stringify(this.newTodo));
+              console.log(JSON.stringify(this.newTodo));
+              this.resertForm();           
+          },
+          edit: function(todo) {
+              this.newTodo = todo
+              this.editForm();
+          },
+          submitForm: function() {
+            if (this.update) {
+                this.put();
+            } else {
+                this.post();
+            }
+          },
+          resetForm: function (){
+            this.viewForm = false;
+            this.update = false;
+          },
+          addForm: function() { 
+            this.update = false;
+            this.viewForm = true;
+          },
+          editForm: function() {
+            this.update = true;
+            this.viewForm = true;
+          }
+      },
+    })
+  </script>
+
+  <style>
+      h1 {
+          font-size: larger;
+      }
+  </style>
+</body>
+</html>

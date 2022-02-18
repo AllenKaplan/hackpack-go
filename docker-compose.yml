@@ -1,0 +1,38 @@
+version: "3"
+services:
+  backend:
+    build: .
+    image: hackpack-go
+    container_name: hackpack-go
+    restart: always
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    environment:
+      PORT: "8080"
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_NAME}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_HOST: postgres
+    volumes:
+      - ".:/app"
+    depends_on:
+      - db
+    links:
+      - db
+
+  db:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_NAME}
+      POSTGRES_HOST_AUTH_METHOD: trust

@@ -11,7 +11,7 @@ type FakeDatabase struct {
 	db map[uint]models.Todo
 }
 
-func newFakeDB() Repository {
+func NewFakeDB() Repository {
 	return FakeDatabase{db: make(map[uint]models.Todo)}
 }
 

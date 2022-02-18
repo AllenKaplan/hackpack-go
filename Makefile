@@ -11,7 +11,7 @@ vet:
 	go vet ./...
 
 build:
-	docker build -t todo .
+	docker build -t {{YOUR PROJECT NAME}} .
 
 up: build
 	docker-compose up -d #> /dev/null
@@ -23,13 +23,13 @@ db:
 	docker-compose start db
 
 push:
-	docker tag todo gar.io/{{YOUR PROJECT ID}}/todo
-	docker push gar.io/{{YOUR PROJECT ID}}/todo
+	docker tag {{YOUR PROJECT NAME}} gar.io/{{YOUR PROJECT ID}}/{{YOUR PROJECT NAME}}
+	docker push gar.io/{{YOUR PROJECT ID}}/{{YOUR PROJECT NAME}}
 
 
 kill:
-	docker kill todo
+	docker kill {{YOUR PROJECT NAME}}
 
 container:
 	docker run  --rm -d -p 8080:8080 -e PORT='8080' \
-		--name todo {{ YOUR PROJECT NAME}}
+		--name {{YOUR PROJECT NAME}} {{ YOUR PROJECT NAME}}

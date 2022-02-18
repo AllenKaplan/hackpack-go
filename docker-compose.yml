@@ -2,8 +2,8 @@ version: "3"
 services:
   backend:
     build: .
-    image: hackpack-go
-    container_name: hackpack-go
+    image: todo
+    container_name: todo
     restart: always
     ports:
       - "8080:8080"

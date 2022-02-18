@@ -11,7 +11,7 @@
 <body  class="bg-green-100">
   <div id="app">
         <div class="container mx-auto">
-        <h1>Internship Tracker</h1>
+        <h1>Todo App</h1>
         <button @click="get()" class="p-4 bg-green-500">Refresh</button>
         <button @click="addForm()" class="p-4 bg-green-500">Add Application</button>
         <button @click="editForm()" class="p-4 bg-green-500">Edit Application</button>
@@ -19,8 +19,8 @@
             <fieldset>
                 <legend>Add Job Posting</legend>
                 <label for="id" v-if="this.update">Id: </label><input v-show="update" type="number" id="id" name="id" v-model="newTodo.id" class="bg-gray-200 m-2"> </br></v-if>
-                <label for="name">Company: </label><input type="text" id="name" name="name" v-model="newTodo.name" class="bg-white m-2"> </br>
-                <label for="description">Position: </label><input type="text" id="description" name="description" v-model="newTodo.description" class="bg-white m-2"> </br>
+                <label for="name">Name: </label><input type="text" id="name" name="name" v-model="newTodo.name" class="bg-white m-2"> </br>
+                <label for="description">Description: </label><input type="text" id="description" name="description" v-model="newTodo.description" class="bg-white m-2"> </br>
                 <label for="status">Application Status: </label>
                 <select id="status" name="status" v-model="newTodo.status" class="bg-white m-2 px-2">
                     <option value="not started">Not Applied</option>
@@ -73,8 +73,8 @@
        },
       methods: {
           get: function() {
-            // axios.get('https://jsonplaceholder.typicode.com/todos')
-            // .then(json => this.notes = json.data)
+            axios.get('https://localhost:8080/todos')
+                .then(json => this.notes = json.data)
           },
           post: function() {
               alert(JSON.stringify(this.newTodo));

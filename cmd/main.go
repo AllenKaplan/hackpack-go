@@ -16,18 +16,19 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	config := repo.Config{
-		Host:     os.Getenv("POSTGRES_HOST"),
-		User:     os.Getenv("POSTGRES_USER"),
-		Password: os.Getenv("POSTGRES_PASSWORD"),
-		DBName:   os.Getenv("POSTGRES_NAME"),
-		Port:     os.Getenv("POSTGRES_PORT"),
-	}
+	//config := repo.Config{
+	//	Host:     os.Getenv("POSTGRES_HOST"),
+	//	User:     os.Getenv("POSTGRES_USER"),
+	//	Password: os.Getenv("POSTGRES_PASSWORD"),
+	//	DBName:   os.Getenv("POSTGRES_NAME"),
+	//	Port:     os.Getenv("POSTGRES_PORT"),
+	//}
 
-	repo, err := repo.NewDB(config)
-	if err != nil {
-		panic(err)
-	}
+	//repo, err := repo.NewDB(config)
+	repo := repo.NewFakeDB()
+	//if err != nil {
+	//	panic(err)
+	//}
 
 	s, err := api.NewServer(repo)
 	if err != nil {
@@ -38,6 +39,7 @@ func main() {
 
 	r.Delims("{[{", "}]}")
 	r.LoadHTMLGlob("templates/*")
+
 	r.GET("/ping", api.PingHandler)
 	r.GET("/", api.IndexHandler)
 	r.GET("/app/:id", s.GetTodoHandler)
